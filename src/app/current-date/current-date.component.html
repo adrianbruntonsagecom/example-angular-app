@@ -1,0 +1,19 @@
+<!-- Should use async pipe -->
+<ng-container *ngIf="data$ | async as data; else loading">
+  <ng-container *ngIf="data.error; else success">
+    <span class="error">{{ data.error }}</span>
+  </ng-container>
+
+  <ng-template #success>
+    <ng-container *ngIf="data.lastUpdated; else loading">
+      <span class="date">{{ data.lastUpdated | date: format }}</span>
+    </ng-container>
+  </ng-template>
+</ng-container>
+
+<ng-template #loading>
+  <app-loader></app-loader>
+</ng-template>
+
+<button (click)="updateDate()">Update</button>
+<br /><br /><br /><br /><br />
