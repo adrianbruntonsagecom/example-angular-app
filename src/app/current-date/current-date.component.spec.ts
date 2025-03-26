@@ -112,6 +112,28 @@ describe("CurrentDateComponent", () => {
       expect(queryError()).toHaveExactTrimmedText("It broke");
     });
 
+    it("should display expected error message when no message provided", () => {
+      currentDateService.getCurrentDate.and.returnValue(
+        throwError(() => new Error())
+      );
+      spectator.detectChanges();
+
+      expectStateDisplayed("error");
+      expect(queryError()).toHaveExactTrimmedText("An error occurred");
+    });
+
+    it("should display expected error message when unexpected error object provided", () => {
+      currentDateService.getCurrentDate.and.returnValue(
+        throwError(() => ({
+          error: "Something went wrong",
+        }))
+      );
+      spectator.detectChanges();
+
+      expectStateDisplayed("error");
+      expect(queryError()).toHaveExactTrimmedText("An error occurred");
+    });
+
     it("should display expected error message if additional load fails", () => {
       const date = new Date(2025, 2, 19);
       currentDateService.getCurrentDate.and.returnValue(of(date));

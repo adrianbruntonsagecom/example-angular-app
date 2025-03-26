@@ -1,6 +1,6 @@
 <!-- Should use async pipe -->
 <ng-container *ngIf="data$ | async as data; else loading">
-  <ng-container *ngIf="data.error; else success">
+  <ng-container *ngIf="data.error !== null; else success">
     <span class="error">{{ data.error }}</span>
   </ng-container>
 

@@ -48,9 +48,13 @@ export class CurrentDateComponent {
 
   private readonly error$ = this.lastUpdatedDate$.pipe(
     ignoreElements(),
-    catchError((error) =>
-      of(error instanceof Error ? error.message : "An error occurred")
-    )
+    catchError((error) => {
+      const errorMessage =
+        error instanceof Error && error.message
+          ? error.message
+          : "An error occurred";
+      return of(errorMessage);
+    })
   );
 
   protected readonly data$ = combineLatest([
